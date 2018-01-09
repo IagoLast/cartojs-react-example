@@ -63,8 +63,6 @@ class App extends Component {
     this.setState({ layerStyle: newStyle, hidelayers: false })
   }
 
-
-
   render() {
     const { center, zoom } = this.state;
     return (

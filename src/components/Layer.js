@@ -27,7 +27,8 @@ class Layer extends Component {
   }
 
   async _renderLayer() {
-    await this.layer.getStyle().setContent(this.props.style);
+    const style = this.layer.getStyle();
+    await style.setContent(this.props.style);
     this.props.hidden ? this.layer.hide() : this.layer.show();
   }
 
