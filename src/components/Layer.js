@@ -8,7 +8,9 @@ import carto from 'carto.js';
 
 class Layer extends Component {
   static contextTypes = {
-    map: PropTypes.object, // Leaflet map
+    map: PropTypes.object,
+    source: PropTypes.string,
+    style: PropTypes.string,
   };
 
   componentDidMount() {
@@ -18,23 +20,22 @@ class Layer extends Component {
     const source = new carto.source.SQL(props.source);
     const style = new carto.style.CartoCSS(props.style);
     this.layer = new carto.layer.Layer(source, style);
-
+    props.hidden ? this.layer.hide() : this.layer.show();
     // Add them to the client and to the map
     props.client.addLayer(this.layer);
     props.client.getLeafletLayer().addTo(this.props.map);
   }
 
-
-  // ... missing methods to handle styles/source updates
-
+  async _renderLayer() {
+    await this.layer.getStyle().setContent(this.props.style);
+    this.props.hidden ? this.layer.hide() : this.layer.show();
+  }
 
   render() {
     if (this.layer) {
-      const newStyle = new carto.style.CartoCSS(this.props.style);
-      this.layer.setStyle(newStyle);
+      this._renderLayer();
     }
-
-    return null; // No need to render anything :)
+    return null;
   }
 }
 

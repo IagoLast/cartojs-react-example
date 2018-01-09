@@ -13,7 +13,9 @@ import Layer from './components/Layer';
 import Widget from './components/Widget';
 
 // Import the dataset we want to use
-import airbnb from './layers/airbnb';
+import airbnb from './data/airbnb';
+
+import utils from './utils/index';
 
 // Some basic styles
 import './index.css';
@@ -27,12 +29,12 @@ class App extends Component {
     center: [40.42, -3.7],
     zoom: 13,
     nativeMap: undefined,
-    layerStyle: airbnb.style
+    layerStyle: airbnb.style,
+    hidelayers: true
   }
 
   constructor(props) {
     super(props);
-
     // Setup the client in the contructor with our user and apiKey
     this.cartoClient = new carto.Client({ apiKey: 'DEMO_API_KEY', username: 'ramirocartodb' });
   }
@@ -42,7 +44,6 @@ class App extends Component {
   }
 
   _renderWidget() {
-    console.warn(this.state.nativeMap);
     if (this.state.nativeMap) {
       return (
         <Widget
@@ -55,38 +56,17 @@ class App extends Component {
     }
   }
 
+  // The widget returns an histogram, so we update the layer asigning a color to each histogram bin
   _onWidgetDataChanged(data) {
     const COLORS = ['#fcde9c', '#faa476', '#f0746e', '#e34f6f', '#dc3977', '#b9257a', '#7c1d6f'];
-    const newStyle = this._buildStyle(data, COLORS);
-    this.setState({ layerStyle: newStyle })
+    const newStyle = utils.buildStyle(data, COLORS);
+    this.setState({ layerStyle: newStyle, hidelayers: false })
   }
 
-  _buildStyle(data, colors) {
-    const bins = data.bins;
-    let rules = data.bins.map((bin, i) => this._createRule(bin, colors[i])).join('');
-    return `
-        #layer {
-            marker-width: 10;
-            marker-fill-opacity: 0.7;
-            marker-allow-overlap: false;
-            marker-line-width: 0;
-            marker-comp-op: multiply;
-            ${rules}
-        }
-    `;
-  }
 
-  _createRule(bin, color) {
-    return `
-            [price >= ${bin.start}] {
-                marker-fill: ${color};
-            }
-        `;
-
-  }
 
   render() {
-    const { nativeMap, center, zoom } = this.state;
+    const { center, zoom } = this.state;
     return (
       <main>
         {/* Create a Map component, with our center, zoom */}
@@ -103,6 +83,7 @@ class App extends Component {
             style={this.state.layerStyle}
             client={this.cartoClient}
             map={this.nativeMap}
+            hidden={this.state.hidelayers}
           />
         </Map>
 
