@@ -35,22 +35,17 @@ class Histogram extends Component {
   }
 
   onDataChanged = (data) => {
-    if (data.bins) {
-      data.bins = data.bins.map((bin, i) => {
-        bin.color = COLORS[i]; return bin;
-      });
-    }
     this.setState(data);
     this.props.onDataChanged(data);
   }
 
   renderBins = () => {
     return this.state.bins.map((bin, index) => {
-      const { avg, freq, normalized, color } = bin;
+      const { avg, freq, normalized } = bin;
 
       return (
         <li className="Histogram-bin" key={`${index}-${freq}`}>
-          <span className="Histogram-bin--fill" style={{ background: `${color}`, height: `${normalized * 100}%` }} />
+          <span className="Histogram-bin--fill" style={{ background: `${COLORS[index]}`, height: `${normalized * 100}%` }} />
           <span className="Histogram-bin--text">{Math.round(avg || 0)} €</span>
         </li>
       );
