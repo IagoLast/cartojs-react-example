@@ -1,17 +1,26 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100vw;
+  height: 100vh;
+}
+
 body {
   font-family: Roboto, Helvetica, Arial, 'sans-serif';
-  margin: 0;
+  background: #333;
+  height: 100%;
+  margin: 1rem;
+}
+
+#root,
+main {
+  width: 100%;
+  height: 100%;
 }
 
 .leaflet-container {
-  width: 100vw;
-  height: 60vh;
-}
-
-.widget {
-  background: #f2f2f2;
-  width: 100vw;
-  height: 40vh;
-  overflow: auto;
-  margin: 0;
+  width: 100%;
+  height: 80%;
 }

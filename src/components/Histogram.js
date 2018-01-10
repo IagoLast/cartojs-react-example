@@ -1,20 +1,65 @@
 import React from 'react';
 import { Component } from 'react';
+import PropTypes from 'prop-types';
+import carto from 'carto.js';
+import './Histogram.css';
 
 class Histogram extends Component {
+  static propTypes = {
+    client: PropTypes.object,
+    source: PropTypes.string,
+    nativeMap: PropTypes.object,
+    onDataChanged: PropTypes.func,
+  }
 
-    _listBins(data) {
-        if (data && data.bins) {
-            return data.bins.map(bin => <li>{bin.freq} - {Math.round(bin.avg)}€</li>);
-        }
-    }
-    render() {
-        return (
-            <ul className="histogram">
-                {this._listBins(this.props.bins)}
-            </ul>
-        );
-    }
+  state = {
+    bins: [],
+  }
+
+  constructor(props) {
+    super(props);
+
+    const dataset = new carto.source.SQL(props.source)
+    const bboxFilter = new carto.filter.BoundingBoxLeaflet(props.nativeMap);
+
+    this.histogramDataview = new carto.dataview.Histogram(dataset, 'price', { bins: 7 });
+    this.histogramDataview.addFilter(bboxFilter);
+    this.histogramDataview.on('dataChanged', this.onDataChanged);
+
+    props.client.addDataview(this.histogramDataview);
+  }
+
+  componentWillUnmount() {
+    this.histogramDataview.off('dataChanged');
+  }
+
+  onDataChanged = (data) => {
+    this.setState(data);
+    this.props.onDataChanged(data);
+  }
+
+  renderBins = () => {
+    return this.state.bins.map((bin, index) => {
+      const { avg, freq, normalized } = bin;
+
+      return (
+        <li className="Histogram-bin" key={`${index}-${freq}`}>
+          <span className="Histogram-bin--fill" style={{ height: `${normalized * 100}%` }} />
+          <span className="Histogram-bin--text">{Math.round(avg || 0)} €</span>
+        </li>
+      );
+    });
+  }
+
+  render() {
+    return (
+      <div className="Histogram">
+        <ul className="Histogram-bins">
+            {this.renderBins()}
+        </ul>
+      </div>
+    );
+  }
 }
 
 export default Histogram;

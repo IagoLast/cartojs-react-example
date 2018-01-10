@@ -1,5 +1,8 @@
-export function buildStyle(data, colors) {
-    let rules = data.bins.map((bin, i) => _createRule(bin, colors[i])).join('');
+const COLORS = ['#fcde9c', '#faa476', '#f0746e', '#e34f6f', '#dc3977', '#b9257a', '#7c1d6f'];
+
+export function buildStyle(data) {
+    const rules = data.bins.map((bin, index) => _createRule(bin, COLORS[index])).join('');
+
     return `
         #layer {
             marker-width: 10;

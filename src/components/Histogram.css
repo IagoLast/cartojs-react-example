@@ -1,0 +1,49 @@
+.Histogram {
+  background: #333;
+  width: 100%;
+  height: 19%;
+  overflow: auto;
+  padding: 1rem 0;
+}
+
+.Histogram-bins {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  align-items: flex-end;
+  justify-content: space-evenly;
+}
+
+.Histogram-bin {
+  background: #444;
+  margin-right: 4px;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.Histogram-bin:last-child {
+  margin-right: 0;
+}
+
+.Histogram-bin--text {
+  color: white;
+  font-size: 2rem;
+  position: absolute;
+  bottom: 0px;
+  padding: 0.5rem;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.Histogram-bin--fill {
+  background: #F0CD53;
+  width: 100%;
+  color: white;
+  font-size: 2rem;
+  position: absolute;
+  bottom: 0;
+}

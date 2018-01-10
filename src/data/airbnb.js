@@ -12,7 +12,7 @@ export default {
     source: `
       SELECT
         *
-      FROM 
+      FROM
         listings
       WHERE
         price < 150
