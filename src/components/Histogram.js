@@ -3,6 +3,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import carto from 'carto.js';
 import './Histogram.css';
+import { COLORS } from '../utils/index';
 
 class Histogram extends Component {
   static propTypes = {
@@ -34,17 +35,22 @@ class Histogram extends Component {
   }
 
   onDataChanged = (data) => {
+    if (data.bins) {
+      data.bins = data.bins.map((bin, i) => {
+        bin.color = COLORS[i]; return bin;
+      });
+    }
     this.setState(data);
     this.props.onDataChanged(data);
   }
 
   renderBins = () => {
     return this.state.bins.map((bin, index) => {
-      const { avg, freq, normalized } = bin;
+      const { avg, freq, normalized, color } = bin;
 
       return (
         <li className="Histogram-bin" key={`${index}-${freq}`}>
-          <span className="Histogram-bin--fill" style={{ height: `${normalized * 100}%` }} />
+          <span className="Histogram-bin--fill" style={{ background: `${color}`, height: `${normalized * 100}%` }} />
           <span className="Histogram-bin--text">{Math.round(avg || 0)} €</span>
         </li>
       );
@@ -55,7 +61,7 @@ class Histogram extends Component {
     return (
       <div className="Histogram">
         <ul className="Histogram-bins">
-            {this.renderBins()}
+          {this.renderBins()}
         </ul>
       </div>
     );

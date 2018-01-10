@@ -1,4 +1,4 @@
-const COLORS = ['#fcde9c', '#faa476', '#f0746e', '#e34f6f', '#dc3977', '#b9257a', '#7c1d6f'];
+export const COLORS = ['#fcde9c', '#faa476', '#f0746e', '#e34f6f', '#dc3977', '#b9257a', '#7c1d6f'];
 
 export function buildStyle(data) {
     const rules = data.bins.map((bin, index) => _createRule(bin, COLORS[index])).join('');
@@ -25,4 +25,4 @@ function _createRule(bin, color) {
 }
 
 
-export default { buildStyle };
+export default { buildStyle, COLORS };
