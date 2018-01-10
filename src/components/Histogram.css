@@ -2,8 +2,9 @@
   background: #333;
   width: 100%;
   margin: auto;
-  height: 200px;
+  height: 250px;
   overflow: auto;
+  padding: 2rem 0;
 }
 
 .Histogram-bins {
