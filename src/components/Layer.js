@@ -2,40 +2,51 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import carto from 'carto.js';
 
-// This component wraps CARTO.js methods, for now this is
-// just a proof of concept, but in the future it would be nice
-// to have our own components library like leaflet does
-
 class Layer extends Component {
   static contextTypes = {
     map: PropTypes.object,
-    source: PropTypes.string,
-    style: PropTypes.string,
   };
 
-  componentDidMount() {
-    const props = this.props;
-
-    // Craete source, styles and layer with the given props
-    const source = new carto.source.SQL(props.source);
-    const style = new carto.style.CartoCSS(props.style);
-    this.layer = new carto.layer.Layer(source, style);
-    props.hidden ? this.layer.hide() : this.layer.show();
-    // Add them to the client and to the map
-    props.client.addLayer(this.layer);
-    props.client.getLeafletLayer().addTo(this.props.map);
+  static propTypes = {
+    source: PropTypes.string,
+    style: PropTypes.string,
+    client: PropTypes.object,
+    hidden: PropTypes.bool
   }
 
-  async _renderLayer() {
-    const style = this.layer.getStyle();
-    await style.setContent(this.props.style);
-    this.props.hidden ? this.layer.hide() : this.layer.show();
+  constructor(props) {
+    super(props);
+
+    const { hidden, source, style } = props;
+
+    const cartoSource = new carto.source.SQL(source);
+    const cartoStyle = new carto.style.CartoCSS(style);
+
+    this.layer = new carto.layer.Layer(cartoSource, cartoStyle);
+    this.setVisibility(hidden)
+  }
+
+  componentDidMount() {
+    const { client } = this.props;
+
+    client.addLayer(this.layer);
+    client.getLeafletLayer().addTo(this.context.map);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return nextProps.style !== this.props.style || nextProps.hidden !== this.props.hidden;
+  }
+
+  setVisibility = isHidden => {
+    isHidden ? this.layer.hide() : this.layer.show();
   }
 
   render() {
-    if (this.layer) {
-      this._renderLayer();
-    }
+    const { hidden, style } = this.props;
+    const layerStyle = this.layer.getStyle();
+
+    layerStyle.setContent(style).then(() => this.setVisibility(hidden));
+
     return null;
   }
 }
