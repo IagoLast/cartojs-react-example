@@ -1,14 +1,14 @@
 # Using CARTO.js with Angular and React
 
-The beta version of CARTO.js has been released at the end of last year and as part of our testing program, we have created several proofs of concept with different frameworks like [react.js](reactjs.org)  or [Angular](https://angular.io/).
+The beta version of CARTO.js has been released at the end of last year and, as part of our testing program, we have created several proofs of concept with different frameworks like [react.js](reactjs.org)  or [Angular](https://angular.io/).
 
-This proof of concept is a map showing prices of airbnb rentals per night in the city of Madrid. Using carto.js we divide the apartments into 7 categories according to their price assigning one color per category. In addition we created a dynamic histogram that indicates how many apartments belong to each category in the area of the map we are looking at.
+This proof of concept is a map showing prices of AirBNB rentals per night in the city of Madrid. Using CARTO.js, we divide the apartments into 7 categories according to their price assigning one color per category. In addition, we create a dynamic histogram that indicates how many apartments belong to each category in the area of the map we are looking at.
 
-Through this simple example we touch on the basic concepts of CARTO.js and we can see how to integrate it with the different frameworks.
+Through this simple example we touch on the basic concepts of CARTO.js and we can see how to integrate it with different frameworks.
 
 ## Basics of CARTO.js
 
-Carto.js is designed to work together with the carto platform in order to unlock the full potential of your geospatial data through a simple javascript api. Of course, the first step is to [create a carto account](https://carto.com/signup/) and upload the data we want to process. Once you have a created account you  `username` and an `API key` is all you need to get started!
+CARTO.js is designed to work together with the CARTO platform in order to unlock the full potential of your geospatial data through a simple javascript API. Of course, the first step is to [create a CARTO account](https://carto.com/signup/) and upload the data we want to process. Once you have a created account your `username` and an `API key` is all you need to get started!
 
 ### Client
 
@@ -24,27 +24,27 @@ const client = new carto.Client({
 
 ### Dataviews
 
-Dataviews are objects used to extract data from a CARTO account in predefined ways (eg: count how many rentals are availiable, know the average price for an area...)
+Dataviews are objects used to extract data from a CARTO account in predefined ways (eg: count how many rentals are available, get the average price for an area, ...)
 
-This data is considered `raw` since since its form is simply a json from which you can show the data as you consider. If you want to display this data on a map, you should use a **layer**.
+This data is considered `raw` since its form is simply a JSON object from which you can show the data as you consider. If you want to display this data on a map, you should use a **layer**.
 
 To create a dataview you just need to indicate the [carto.Source](https://carto.com/documentation/cartojs/docs/#cartosourcebase) and the [operation](https://carto.com/documentation/cartojs/docs/#cartooperation). 
 
 ```Javascript
-// Given the airbnb dataset get the value of the most expensive rental
+// Given the AirBNB dataset get the value of the most expensive rental
 const maxRentalPriceDataview = new carto.dataview.Formula(airbnbSource, 'price', {
  operation: carto.operation.MAX,
 });
 ```
 
-Once created and **added to a client**  this object will [fire events](https://carto.com/documentation/cartojs/docs/#cartodataviewbase) containing the requested data.
+Once created and **added to a client**, this object will [fire events](https://carto.com/documentation/cartojs/docs/#cartodataviewbase) containing the requested data.
 
 ```javascript
 // Add the dataview to the client
 await client.addDataview(maxRentalPriceDataview);
 // Wait for the server to give the data
 maxRentalPriceDataview.on('dataChanged', newData => { 
-	console.log(`The highest airbnb rental in madrid costs: ${newData}€`);
+	console.log(`The highest AirBNB rental in madrid costs: ${newData}€`);
 });
 ```
 
@@ -54,7 +54,7 @@ maxRentalPriceDataview.on('dataChanged', newData => {
 
 Layers are object used to extract data from a CARTO account and display them on a map in a representative way.
 
-Same as dataviews they need a [carto.Source](https://carto.com/documentation/cartojs/docs/#cartosourcebase) that indicates where to extract the data. They also need a [carto.Style](https://carto.com/documentation/cartojs/docs/#cartostylebase) that contains the information about how the data should be displayed.
+As in dataviews, they need a [carto.Source](https://carto.com/documentation/cartojs/docs/#cartosourcebase) that indicates where to extract the data. They also need a [carto.Style](https://carto.com/documentation/cartojs/docs/#cartostylebase) that contains the information about how the data should be displayed.
 
 ```Javascript
 const rentalsLayer = new carto.layer.Layer(airbnbSource, airbnbStyle);
@@ -95,20 +95,20 @@ src/
     └── index.js
 ```
 
-- **index.js** Is the entry point of our application.
-- **components**: All the components used in the app are here.
-  - **Histogram**: A widget showing how many rentals are in each one of our price categories.
-  - **Layer**: A component used to display rentals in a map.
+- **index.js**: the entry point of our application.
+- **components**: all the components used in the app are here.
+  - **Histogram**: a widget showing how many rentals are in each one of our price categories.
+  - **Layer**: a component used to display rentals in a map.
 - **data**
-  - **airbnb.js**: Contains the **source** and default **style** for the airbnb dataset.
+  - **airbnb.js**: contains the **source** and default **style** for the AirBNB dataset.
 - **utils**
-  - **index.js** Contains a function that creates custom [cartoCSS](https://carto.com/docs/carto-engine/cartocss/).
+  - **index.js** contains a function that creates custom [cartoCSS](https://carto.com/docs/carto-engine/cartocss/).
 
 
 
 ### Index.js
 
-This is the entry point of the application, it contains the main [component](https://reactjs.org/docs/react-component.html) of our application which is initialized with a `state` and a `cartoclient` as follows:
+This is the entry point of the application. It contains the main [component](https://reactjs.org/docs/react-component.html) of our application which is initialized with a `state` and a `cartoclient` as follows:
 
 ```javascript
 // We track map's center and zoom and the layer style and visibility
@@ -125,7 +125,7 @@ cartoClient = new carto.Client({ apiKey: '{api_key}', username: '{username}' });
 
 
 
- The main component contains a layer and a histogram and it's JSX will look similar to this:
+ The main component contains a layer and a histogram and its JSX will look similar to this:
 
 ```html
 <!-- WARNING: Only for learning purposes don't copy & paste -->
@@ -151,20 +151,20 @@ cartoClient = new carto.Client({ apiKey: '{api_key}', username: '{username}' });
 </main>
 ```
 
-The `Map` and the `Basemap` are created using  components  provided by the [react-leaflet library](https://react-leaflet.js.org/) while the carto layer and the histogram are build ad-hoc for this project.
+The `Map` and the `Basemap` are created using  components  provided by the [react-leaflet library](https://react-leaflet.js.org/) while the CARTO layer and the histogram are build ad-hoc for this project.
 
 Notice the parameters passed to our custom components:
 
 - Layer
-  - source: String with a SQL query pointing to the geospatial data
-  - style: A CartoCSS string with information about how the data should be displayed.
-  - Client: A carto.Client instance
-  - Hidden: A boolean attribute controlling the layer´s visibility.
+  - source: string with a SQL query pointing to the geospatial data.
+  - style: a CartoCSS string with information about how the data should be displayed.
+  - Client: a carto.Client instance.
+  - Hidden: a boolean attribute controlling the layer´s visibility.
 - Histogram
-  - Client: A carto.Client instance
-  - source: String with a SQL query pointing to the geospatial data
-  - nativeMap: The leaflet-map element
-  - onDataChanged: A callback function that will be executed when the dataview fetches new data.
+  - Client: a carto.Client instance.
+  - source: string with a SQL query pointing to the geospatial data.
+  - nativeMap: the leaflet-map element.
+  - onDataChanged: a callback function that will be executed when the dataview fetches new data.
 
 ### Layer Component
 
@@ -198,7 +198,7 @@ componentDidMount() {
 }
 ```
 
-This allow us to view a map as the following:
+This allows us to view a map as the following:
 
 ![First example](/img/1.png)
 
@@ -206,13 +206,13 @@ This allow us to view a map as the following:
 
 We want to create a histogram displaying the price per night for the rentals in the map.
 
-As you probalby know we are going to create a React component wrapping a a [histogram dataview](https://carto.com/documentation/cartojs/docs/#cartodataviewhistogram) so you can see how easy is to get geospatial data from the carto server.
+As you probalby know, we are going to create a React component wrapping a a [histogram dataview](https://carto.com/documentation/cartojs/docs/#cartodataviewhistogram) so you can see how easy is to get geospatial data from the CARTO server.
 
 As in the Layer component, all the initialization is done in the constructor. To create the histogram we only need a [carto.source.SQL](https://carto.com/documentation/cartojs/docs/#cartosourcesql) pointing to the rentals data, the column name and the number of bins.
 
-Since building the histogram requires server interaction all the process will be asyncrhonous and we need to register a function callback that will be executed when the data is available. 
+Since building the histogram requires server interaction, all the process will be asynchronous and we need to register a function callback that will be executed when the data is available. 
 
-Finally remember to add the widget to the client, otherwise nothing will happen!
+Finally, remember to add the widget to the client. Otherwise nothing will happen!
 
 ```Javascript
 constructor(props) {
@@ -229,7 +229,7 @@ constructor(props) {
   }
 ```
 
-The simplest `onDataChanged` callback could be one that just updates the react internal state:
+The simplest `onDataChanged` callback could be one that just updates the React internal state:
 
 ```javascript
 onDataChanged = (data) => {
@@ -245,19 +245,19 @@ render() {
 }
 ```
 
-A simple render function like this will show a unordered list with the average price for every [bin](https://carto.com/documentation/cartojs/docs/#cartodataviewbinitem) and the how many rentals are in this bin.
+A simple render function like this will show a unordered list with the average price for every [bin](https://carto.com/documentation/cartojs/docs/#cartodataviewbinitem) and how many rentals are in this bin.
 
 ![App with map and widget](/img/2.png)
 
-With some css & html we can improve this visualization even more:
+With some CSS & HTML we can improve this visualization even more:
 
 ![App with map and styled widget](/img/3.png)
 
-Once we get this… Won't be great to have a different color in the layer`s points according to its histogram bin?
+Once we get this… Won't it be great to have a different color in the layer points according to its histogram bin?
 
 ### Updating layer style
 
-Once we get the histogram data, we want to update the Layer and apply new styles to create a greater visualisation. The first step will be updating our callback and notify the parent element about the new data arrival.
+Once we get the histogram data, we want to update the layer and apply new styles to create a greater visualisation. The first step will be updating our callback and notify the parent element about the new data arrival.
 
 ```javascript
 // Histogram.js
@@ -268,7 +268,7 @@ onDataChanged = (data) => {
 }
 ```
 
-On the parent element (index.js) we will process this data generating a new style that should be applied to the layer.
+On the parent element (index.js) we will process this data, generating a new style that should be applied to the layer.
 
 ```javascript
 // index.js
@@ -278,7 +278,7 @@ onHistogramChanged(data) {
 }
 ```
 
-To generate the style we use a utility function that generates a cartoCSS from a [histogram data](https://carto.com/documentation/cartojs/docs/#cartodataviewhistogramdata) 
+To generate the style we use a utility function that generates a CartoCSS from a [histogram data](https://carto.com/documentation/cartojs/docs/#cartodataviewhistogramdata) 
 
 ```javascript
 export const COLORS = ['#fcde9c', '#faa476', '#f0746e', '#e34f6f', '#dc3977', '#b9257a', '#7c1d6f'];
@@ -311,7 +311,7 @@ export default { buildStyle, COLORS };
 
 ```
 
-We won't explain this in detail since is not very relevant but the core concept here is that `buildStyle` transforms a  [histogram data](https://carto.com/documentation/cartojs/docs/#cartodataviewhistogramdata) into a [cartoCSS](https://carto.com/docs/carto-engine/cartocss/) like the following:
+We won't explain this in detail since is not very relevant but the core concept here is that `buildStyle` transforms a  [histogram data](https://carto.com/documentation/cartojs/docs/#cartodataviewhistogramdata) into a [CartoCSS](https://carto.com/docs/carto-engine/cartocss/) like the following:
 
 ```
 #layer {
@@ -335,9 +335,9 @@ We won't explain this in detail since is not very relevant but the core concept 
 }
 ```
 
-This new cartocss is asigned to the `layerStyle` variable in the main app component state triggering a new `render` .
+This new CartoCSS is asigned to the `layerStyle` variable in the main app component state triggering a new `render` .
 
-This style is pased to the layer as a property 
+This style is passed to the layer as a property. 
 
 ```jsx
 <Layer
@@ -348,7 +348,7 @@ This style is pased to the layer as a property
 />
 ```
 
-So the layer must be aware of this changes, this is done using the [shouldComponentUpdate](https://reactjs.org/docs/react-component.html#shouldcomponentupdate) function, checking if the style has changed. 
+So the layer must be aware of this changes. This is done using the [shouldComponentUpdate](https://reactjs.org/docs/react-component.html#shouldcomponentupdate) function, checking if the style has changed. 
 
 ```javascript
 shouldComponentUpdate(nextProps) {
@@ -356,7 +356,7 @@ shouldComponentUpdate(nextProps) {
 }
 ```
 
-So in our render function we only need to update the layer style with the new cartoCSS pased as a property, we can simply use the [.setContent](https://carto.com/documentation/cartojs/docs/#cartostylecartocsssetcontent) function to achieve this.
+So in our render function we only need to update the layer style with the new CartoCSS pased as a property. We can simply use the [.setContent](https://carto.com/documentation/cartojs/docs/#cartostylecartocsssetcontent) function to achieve this.
 
 ```javascript
 render() {
@@ -369,7 +369,7 @@ render() {
   }
 ```
 
-since our client connects everything, the map will be updated on its own:
+Since our client connects everything, the map will be updated on its own:
 
 ![App with map styles updated](/img/4.png)
 
@@ -399,8 +399,7 @@ constructor(props) {
 
 
 
-And that´s all! now when the map position is changed, the histogram widget will fire a `dataChanged` event with new data belonging  to the visible portion of the map.
-
+And that´s all! Now when we change the map position, the histogram widget will fire a `dataChanged` event with new data belonging  to the visible portion of the map.
 
 
 ![App reacts to mouse movement](/img/final.gif)
