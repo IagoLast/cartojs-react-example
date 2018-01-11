@@ -403,5 +403,5 @@ And that´s all! now when the map position is changed, the histogram widget will
 
 
 
-![https://gyazo.com/5842b83a53d9b7e282379bf17b547e64](https://i.gyazo.com/5842b83a53d9b7e282379bf17b547e64.gif)](https://gyazo.com/5842b83a53d9b7e282379bf17b547e64)
+![App reacts to mouse movement](https://i.gyazo.com/5842b83a53d9b7e282379bf17b547e64.gif)
 
