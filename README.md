@@ -247,11 +247,11 @@ render() {
 
 A simple render function like this will show a unordered list with the average price for every [bin](https://carto.com/documentation/cartojs/docs/#cartodataviewbinitem) and the how many rentals are in this bin.
 
-![App with map and widget](images/2.png)
+![App with map and widget](/img/2.png)
 
 With some css & html we can improve this visualization even more:
 
-![App with map and styled widget](/images/3.png)
+![App with map and styled widget](/img/3.png)
 
 Once we get this… Won't be great to have a different color in the layer`s points according to its histogram bin?
 
@@ -371,7 +371,7 @@ render() {
 
 since our client connects everything, the map will be updated on its own:
 
-![App with map styles updated](images/4.png)
+![App with map styles updated](/img/4.png)
 
  ### Listening to map position
 
@@ -403,5 +403,5 @@ And that´s all! now when the map position is changed, the histogram widget will
 
 
 
-[![https://gyazo.com/5842b83a53d9b7e282379bf17b547e64](https://i.gyazo.com/5842b83a53d9b7e282379bf17b547e64.gif)](https://gyazo.com/5842b83a53d9b7e282379bf17b547e64)
+![https://gyazo.com/5842b83a53d9b7e282379bf17b547e64](https://i.gyazo.com/5842b83a53d9b7e282379bf17b547e64.gif)](https://gyazo.com/5842b83a53d9b7e282379bf17b547e64)
 
