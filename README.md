@@ -203,9 +203,7 @@ componentDidMount() {
 
 This allows us to view a map as the following:
 
-<div class="Wrap--sBig">
-  <img src="{{ site.baseurl }}/img/posts/2018/2018-01-12-cartojs-and-react/1.png" target="_blank" />
-</div>
+![](https://carto.com/blog/img/posts/2018/2018-01-12-cartojs-and-react/1.8fc1345c.png)
 
 ### Histogram Widget
 
@@ -252,17 +250,12 @@ render() {
 
 A simple render function like this will show a unordered list with the average price for every [bin](https://carto.com/documentation/cartojs/docs/#cartodataviewbinitem) and how many rentals are in this bin.
 
-<div class="Wrap--sBig">
-  <img src="{{ site.baseurl }}/img/posts/2018/2018-01-12-cartojs-and-react/2.png" target="_blank" alt="App with map and widget"/>
-</div>
- 
-<div></div>
+![App with map and widget](https://carto.com/blog/img/posts/2018/2018-01-12-cartojs-and-react/2.9b6fd62c.png)
 
 With some CSS & HTML we can improve this visualization even more:
 
-<div class="Wrap--sBig">
-  <img src="{{ site.baseurl }}/img/posts/2018/2018-01-12-cartojs-and-react/3.png" target="_blank" alt="App with map and styled widgets"/>
-</div>
+
+![App with map and styled widgets](https://carto.com/blog/img/posts/2018/2018-01-12-cartojs-and-react/3.8c3cb775.png)
 
 Once we get this… Won't it be great to have a different color in the layer points according to its histogram bin?
 
@@ -382,9 +375,7 @@ render() {
 
 Since our client connects everything, the map will be updated on its own:
 
-<div class="Wrap--sBig">
-  <img src="{{ site.baseurl }}/img/posts/2018/2018-01-12-cartojs-and-react/4.png" target="_blank" alt="App with map styles updated"/>
-</div>
+![App with map styles updated](https://carto.com/blog/img/posts/2018/2018-01-12-cartojs-and-react/3.8c3cb775.png)
 
 ### Listening to map position
 
@@ -415,4 +406,4 @@ constructor(props) {
 And that's all! Now when we change the map position, the histogram widget will fire a `dataChanged` event with new data belonging  to the visible portion of the map.
 
 
-![App reacts to mouse movement](/blog/img/posts/2018/2018-01-12-cartojs-and-react/final.gif)
+![App reacts to mouse movement](https://carto.com/blog/img/posts/2018/2018-01-12-cartojs-and-react/final.20fd83c0.gif)
